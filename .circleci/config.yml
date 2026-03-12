@@ -39,3 +39,18 @@ workflows:
       - integration
       - prod:
           type: approval
+workflows:
+  version: 2
+  terraform:
+    jobs:
+      - tflint
+      - test:
+          requires:
+            - tflint
+      - integration:
+          requires:
+            - test
+      - prod:
+          type: approval
+          requires:
+            - integration
